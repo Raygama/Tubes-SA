@@ -17,5 +17,5 @@ Install streamlit terlebih dahulu:
    
    2.5 Klik OK terus sampai keluar dari settings
 4. Jalankan 'streamlit hello' di cmd untuk mengetes streamlit sudah jalan
-5. Buka folder Streamlit-Tubes atau folder yang ada README.md nya terus buka cmd di situ
+5. Buka folder Tubes-SA atau folder yang ada README.md nya terus buka cmd di situ
 6. Jalankan code 'streamlit run home.py' untuk menjalankan aplikasi
