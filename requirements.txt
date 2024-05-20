@@ -1,2 +1,2 @@
-graphiz
+graphviz
 pandas
