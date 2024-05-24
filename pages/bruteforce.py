@@ -123,10 +123,10 @@ st.title("Climbing Stairs Problem - Brute Force Visualization")
 st.divider()
 
 if st.button("Back"):
-    st.experimental_rerun()
+    st.switch_page("pages/algorithms.py")
 
 if st.button("Home"):
-    st.experimental_rerun()
+    st.experimental_rerun("home.py")
 
 stairs = st.slider("Number of Stairs: ", 1, 15)
 run = st.button("Run Algorithm")

@@ -84,6 +84,12 @@ def climbingStairs(n):
     return stair[n], combinations
 
 st.title("Climbing Stairs Problem - Dynamic Programming Visualization")
+st.divider()
+if st.button("Back"):
+    st.switch_page("pages/algorithms.py")
+
+if st.button("Home"):
+    st.experimental_rerun("home.py")
 
 stairs = st.slider("Number of Stairs: ", 1, 15)
 
