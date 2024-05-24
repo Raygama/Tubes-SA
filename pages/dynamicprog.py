@@ -89,7 +89,7 @@ if st.button("Back"):
     st.switch_page("pages/algorithms.py")
 
 if st.button("Home"):
-    st.experimental_rerun("home.py")
+    st.switch_page("home.py")
 
 stairs = st.slider("Number of Stairs: ", 1, 15)
 
