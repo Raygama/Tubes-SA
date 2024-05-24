@@ -144,7 +144,6 @@ if run:
         
         st.write("Visualisasi Tangga:")
         ways, combinations = climbingStairs(stairs)
-        st.write(f"The number of ways to climb the stairs is: {ways}")
         
         figs = visualize_combinations(combinations, stairs)
         for i, (fig, combo) in enumerate(zip(figs, combinations)):
