@@ -15,6 +15,8 @@ def draw_recursive_tree(graph, i, n, parent=None, counter=None):
         if parent is not None:
             graph.edge(parent, f"{i}_{counter['value']}")
         counter['value'] += 1
+        st.graphviz_chart(graph)  # Update chart after adding node
+        time.sleep(0.5) 
         return 0
     
     if i == n:
@@ -23,6 +25,8 @@ def draw_recursive_tree(graph, i, n, parent=None, counter=None):
         if parent is not None:
             graph.edge(parent, f"{i}_{counter['value']}")
         counter['value'] += 1
+        st.graphviz_chart(graph)    
+        time.sleep(0.5)  
         return 1
 
     node_label = f"{i}"
@@ -33,8 +37,8 @@ def draw_recursive_tree(graph, i, n, parent=None, counter=None):
     current_node = f"{i}_{counter['value']}"
     counter['value'] += 1
 
-    time.sleep(1)
-    st.graphviz_chart(graph)
+    st.graphviz_chart(graph)  # Update chart after adding node
+    time.sleep(0.5)  # Sleep for visualization
     
     left_result = draw_recursive_tree(graph, i + 1, n, current_node, counter)
     right_result = draw_recursive_tree(graph, i + 2, n, current_node, counter)
