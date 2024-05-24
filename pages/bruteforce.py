@@ -5,31 +5,43 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Fungsi untuk menggambar pohon rekursif menggunakan Graphviz
-def draw_recursive_tree(graph, i, n, parent=None, counter=None):
+def draw_recursive_tree(graph, i, n, parent=None, counter=None, path=None, best_path=None):
     if counter is None:
         counter = {'value': 0}
+    if path is None:
+        path = []
+    if best_path is None:
+        best_path = {'value': []}
     
+    path.append(i)
+
     if i > n:
-        node_label = f"{i} (X)"
+        node_label = f"Tangga {i} (X)\nTidak Layak"
         graph.node(f"{i}_{counter['value']}", label=node_label, shape='circle', color='red')
         if parent is not None:
             graph.edge(parent, f"{i}_{counter['value']}")
         counter['value'] += 1
         st.graphviz_chart(graph)  # Update chart after adding node
-        time.sleep(0.5) 
+        time.sleep(0.5)  # Sleep for visualization
+        path.pop()
         return 0
     
     if i == n:
-        node_label = f"{i} (1)"
+        node_label = f"Tangga {i} (V)\nLayak"
         graph.node(f"{i}_{counter['value']}", label=node_label, shape='circle', style='filled', color='lightblue')
         if parent is not None:
             graph.edge(parent, f"{i}_{counter['value']}")
         counter['value'] += 1
-        st.graphviz_chart(graph)    
-        time.sleep(0.5)  
+        st.graphviz_chart(graph)  # Update chart after adding node
+        time.sleep(0.5)  # Sleep for visualization
+
+        if not best_path['value'] or len(path) < len(best_path['value']):
+            best_path['value'] = list(path)
+        
+        path.pop()
         return 1
 
-    node_label = f"{i}"
+    node_label = f"Tangga {i}"
     graph.node(f"{i}_{counter['value']}", label=node_label, shape='circle')
     if parent is not None:
         graph.edge(parent, f"{i}_{counter['value']}")
@@ -37,12 +49,17 @@ def draw_recursive_tree(graph, i, n, parent=None, counter=None):
     current_node = f"{i}_{counter['value']}"
     counter['value'] += 1
 
-    st.graphviz_chart(graph)  # Update chart after adding node
+    # Clear the chart before adding new nodes
+    st.graphviz_chart(graphviz.Digraph())
+    
+    # Draw the new tree
+    st.graphviz_chart(graph)
     time.sleep(0.5)  # Sleep for visualization
     
-    left_result = draw_recursive_tree(graph, i + 1, n, current_node, counter)
-    right_result = draw_recursive_tree(graph, i + 2, n, current_node, counter)
+    left_result = draw_recursive_tree(graph, i + 1, n, current_node, counter, path, best_path)
+    right_result = draw_recursive_tree(graph, i + 2, n, current_node, counter, path, best_path)
 
+    path.pop()
     return left_result + right_result
 
 # Fungsi untuk menggambar tangga dengan langkah-langkah tertentu
@@ -139,8 +156,10 @@ if run:
         st.write("Visualisasi Pohon Rekursif:")
         
         graph = graphviz.Digraph()
-        total_ways = draw_recursive_tree(graph, 0, stairs)
+        best_path = {'value': []}
+        total_ways = draw_recursive_tree(graph, 0, stairs, best_path=best_path)
         st.write(f"The number of ways to climb the stairs is: {total_ways}")
+        st.write(f"Langkah terbaik untuk mencapai tannga ke-{stairs} adalah: {best_path['value']}")
         
         st.write("Visualisasi Tangga:")
         ways, combinations = climbingStairs(stairs)

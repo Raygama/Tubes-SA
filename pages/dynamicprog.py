@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
-def draw_stairs(combo, n, step_width=1, color='blue'):
+def draw_stairs(combo, n, step_width=1, color='blue', title_suffix=""):
     x = []
     y = []
     current_position = 0
@@ -24,17 +24,18 @@ def draw_stairs(combo, n, step_width=1, color='blue'):
     ax.set_xticklabels([str(i) for i in range(1, n + 1)])
     ax.set_yticks(range(n + 1))
     ax.set_yticklabels([str(i) for i in range(n + 1)])
-    ax.set_title(f"Stairs with {n} steps")
+    ax.set_title(f"Stairs with {n} steps {title_suffix}")
     ax.set_xlabel("Step number")
     ax.set_ylabel("Step")
     ax.grid(True)
     
     return fig
 
-def visualize_combinations(combinations, n):
+def visualize_combinations(combinations, n, best_path):
     figs = []
     for combo in combinations:
-        fig = draw_stairs(combo.split(), n)
+        title_suffix = "(Best Path)" if combo == best_path else ""
+        fig = draw_stairs(combo.split(), n, title_suffix=title_suffix)
         figs.append(fig)
     return figs
 
@@ -80,8 +81,11 @@ def climbingStairs(n):
             return current_combinations
 
     combinations = get_combinations(n)
-    
-    return stair[n], combinations
+
+    # Find the shortest path
+    best_path = min(combinations, key=lambda x: len(x.split()))
+
+    return stair[n], combinations, best_path
 
 st.title("Climbing Stairs Problem - Dynamic Programming Visualization")
 st.divider()
@@ -96,10 +100,11 @@ stairs = st.slider("Number of Stairs: ", 1, 15)
 run = st.button("Run Algorithm")
 if run:
     if stairs:
-        ways, combinations = climbingStairs(stairs)
+        ways, combinations, best_path = climbingStairs(stairs)
         st.write(f"The number of ways to climb the stairs is: {ways}")
-        
-        figs = visualize_combinations(combinations, stairs)
+        st.write(f"Langkah terbaik untuk mencapai tangga ke-4{stairs} adalah: {best_path}")
+
+        figs = visualize_combinations(combinations, stairs, best_path)
         for i, (fig, combo) in enumerate(zip(figs, combinations)):
             st.write(f"Visualization {i+1}: {combo}")
             st.pyplot(fig)
