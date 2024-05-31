@@ -1,7 +1,7 @@
 import streamlit as st
-import pandas as pd 
-import matplotlib.pyplot as plt 
-import numpy as np  
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
 import time
 
 # Fungsi buat gambar tangga dari kombinasi langkah
@@ -46,11 +46,11 @@ def visualize_combinations(combinations, n, best_path):
 # Fungsi ALGORITMA CLIMBING STAIRS buat hitung cara naik tangga
 def climbingStairs(n):
     if n == 0:
-        return 0, []  # Kalau 0 tangga, balikin 0 dan list kosong
+        return 0, [], ""  # Kalau 0 tangga, balikin 0, list kosong, dan string kosong
     if n == 1:
-        return 1, ["1"]  # Kalau 1 tangga, cuma ada 1 cara
+        return 1, ["1"], "1"  # Kalau 1 tangga, cuma ada 1 cara
     if n == 2:
-        return 2, ["1 1", "2"]  # Kalau 2 tangga, ada 2 cara
+        return 2, ["1 1", "2"], "2"  # Kalau 2 tangga, ada 2 cara
     
     stair = [0] * (n + 1)  # List buat nyimpen cara tiap tangga
     stair[1] = 1  # Tangga 1 ada 1 cara
